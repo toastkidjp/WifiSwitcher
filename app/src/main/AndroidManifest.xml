@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="jp.toastkid.wifi_switcher">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+
+    <application
+        android:name="jp.toastkid.wifi_switcher.ExtendedApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name="jp.toastkid.wifi_switcher.settings.SettingsActivity"
+            android:theme="@style/AppTheme.Translucent"
+            android:configChanges="orientation|screenSize"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.WEB_SEARCH" />
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="jp.toastkid.wifi_switcher.settings.color.ColorSettingActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="screenSize"
+            />
+        <activity android:name=".SnackbarActivity"
+            android:theme="@style/SnackbarTheme"
+            android:configChanges="screenSize"
+            />
+
+        <service android:name=".wifi.WifiSwitcher"/>
+
+        <receiver android:name="jp.toastkid.wifi_switcher.appwidget.Provider" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_provider" />
+        </receiver>
+
+        <receiver
+            android:name="jp.toastkid.wifi_switcher.appwidget.IntentReceiver"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="UPDATE_WIDGET" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_provider" />
+        </receiver>
+
+        <receiver android:name=".wifi.WifiStateReceiver" >
+            <intent-filter>
+                <action android:name="android.net.wifi.STATE_CHANGE" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>
