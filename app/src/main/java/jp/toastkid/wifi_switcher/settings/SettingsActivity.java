@@ -19,6 +19,7 @@ import jp.toastkid.wifi_switcher.BuildConfig;
 import jp.toastkid.wifi_switcher.R;
 import jp.toastkid.wifi_switcher.advertisement.AdInitializers;
 import jp.toastkid.wifi_switcher.appwidget.Updater;
+import jp.toastkid.wifi_switcher.libs.SettingIntentFactory;
 import jp.toastkid.wifi_switcher.libs.Toaster;
 import jp.toastkid.wifi_switcher.libs.preference.PreferenceApplier;
 import jp.toastkid.wifi_switcher.settings.color.ColorSettingActivity;
@@ -95,6 +96,31 @@ public class SettingsActivity extends BaseActivity {
         startActivity(ColorSettingActivity.makeIntent(this));
     }
 
+    @OnClick(R.id.settings_airplane)
+    public void airplane() {
+        startActivity(SettingIntentFactory.airplane());
+    }
+
+    @OnClick(R.id.settings_wifi_detail)
+    public void wifi() {
+        startActivity(SettingIntentFactory.wifi());
+    }
+
+    @OnClick(R.id.settings_wifi_ip)
+    public void wifiIp() {
+        startActivity(SettingIntentFactory.wifiIp());
+    }
+
+    @OnClick(R.id.settings_wireless)
+    public void wireless() {
+        startActivity(SettingIntentFactory.wireless());
+    }
+
+    @OnClick(R.id.settings_device)
+    public void deviceSettings() {
+        startActivity(SettingIntentFactory.device());
+    }
+
     @OnClick(R.id.settings_background)
     public void close() {
         finish();
@@ -105,15 +131,4 @@ public class SettingsActivity extends BaseActivity {
         return R.string.title_settings;
     }
 
-    /**
-     * Make launcher intent.
-     * @param context
-     * @return
-     */
-    @NonNull
-    public static Intent makeIntent(final Context context) {
-        final Intent intent = new Intent(context, SettingsActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        return intent;
-    }
 }

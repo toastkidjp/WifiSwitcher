@@ -32,5 +32,10 @@
     <string name="title_clear_saved_color">Clear saved color</string>
     <string name="on">ON</string>
     <string name="off">OFF</string>
+    <string name="title_wireless_settings">ワイヤレス設定</string>
+    <string name="title_device_settings">端末の設定</string>
+    <string name="title_airplane_settings">機内モード設定</string>
+    <string name="title_wifi_settings">Wi-Fi 設定</string>
+    <string name="title_wifi_ip_settings">Wi-Fi IP 設定</string>
 
 </resources>
