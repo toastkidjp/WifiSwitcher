@@ -36,7 +36,7 @@ class TestAdInitializer implements AdInitializer {
         }
         final AdRequest request = new AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .addTestDevice("ACCB0CA3D05AE25EB35C22A303702020")
+                .addTestDevice("59A864957D348217B858A8CE956AA352")
                 .build();
         adView.loadAd(request);
     }
