@@ -17,7 +17,6 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="60dp"
         >
         <LinearLayout
             android:orientation="vertical"
@@ -215,54 +214,4 @@
             <include layout="@layout/primary_dark_divider" />
         </LinearLayout>
     </ScrollView>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="-50dp"
-        >
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:background="@color/soft_background"
-                >
-                <TextView
-                    android:layout_width="40dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:paddingLeft="@dimen/settings_item_left_margin"
-                    android:maxLines="1"
-                    android:background="@color/soft_background"
-                    android:gravity="center_vertical"
-                    android:text="@string/title_advertisement_1"
-                    android:textSize="16sp"
-                    />
-                <TextView
-                    android:layout_width="40dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:paddingLeft="@dimen/settings_item_left_margin"
-                    android:maxLines="1"
-                    android:gravity="center_vertical"
-                    android:text="@string/title_advertisement_2"
-                    android:textSize="16sp"
-                    />
-            </LinearLayout>
-            <com.google.android.gms.ads.AdView
-                android:id="@+id/ad"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_alignParentBottom="true"
-                ads:adSize="BANNER"
-                ads:adUnitId="@string/production_banner_unit_id"
-                />
-        </LinearLayout>
-    </FrameLayout>
 </LinearLayout>

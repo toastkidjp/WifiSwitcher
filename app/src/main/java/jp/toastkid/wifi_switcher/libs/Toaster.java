@@ -1,11 +1,15 @@
 package jp.toastkid.wifi_switcher.libs;
 
+import android.content.Context;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import jp.toastkid.wifi_switcher.settings.SettingsActivity;
 
 /**
  * Simple toasting utilities.
@@ -50,5 +54,14 @@ public class Toaster {
             @ColorInt final int fontColor
             ) {
         snackShort(view, view.getResources().getString(messageId), color, fontColor);
+    }
+
+    /**
+     * Show short toast.
+     * @param context
+     * @param messageId
+     */
+    public static void tShort(final Context context, @StringRes final int messageId) {
+        Toast.makeText(context, messageId, Toast.LENGTH_SHORT).show();
     }
 }

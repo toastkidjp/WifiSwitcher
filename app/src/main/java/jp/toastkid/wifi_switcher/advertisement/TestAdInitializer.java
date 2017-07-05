@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 
 import jp.toastkid.wifi_switcher.BuildConfig;
@@ -34,10 +35,23 @@ class TestAdInitializer implements AdInitializer {
         if (!BuildConfig.DEBUG) {
             throw new IllegalStateException();
         }
-        final AdRequest request = new AdRequest.Builder()
+        adView.loadAd(makeTestAdRequest());
+    }
+
+    @Override
+    public void invoke(@NonNull final InterstitialAd interstitialAd) {
+        if (!BuildConfig.DEBUG) {
+            throw new IllegalStateException();
+        }
+        interstitialAd.loadAd(makeTestAdRequest());
+    }
+
+    @NonNull
+    private AdRequest makeTestAdRequest() {
+        return new AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .addTestDevice("59A864957D348217B858A8CE956AA352")
                 .build();
-        adView.loadAd(request);
     }
+
 }

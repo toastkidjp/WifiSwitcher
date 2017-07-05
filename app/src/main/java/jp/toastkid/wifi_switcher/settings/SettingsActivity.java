@@ -8,8 +8,10 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.InterstitialAd;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -17,6 +19,7 @@ import butterknife.OnClick;
 import jp.toastkid.wifi_switcher.BaseActivity;
 import jp.toastkid.wifi_switcher.BuildConfig;
 import jp.toastkid.wifi_switcher.R;
+import jp.toastkid.wifi_switcher.advertisement.AdInitializer;
 import jp.toastkid.wifi_switcher.advertisement.AdInitializers;
 import jp.toastkid.wifi_switcher.appwidget.Updater;
 import jp.toastkid.wifi_switcher.libs.SettingIntentFactory;
@@ -46,10 +49,9 @@ public class SettingsActivity extends BaseActivity {
     @BindView(R.id.wifi_state)
     public TextView wifiState;
 
-    @BindView(R.id.ad)
-    public AdView adView;
-
     private PreferenceApplier mPreferenceApplier;
+
+    private InterstitialAd interstitialAd;
 
     @Override
     public void onCreate(Bundle b) {
@@ -80,17 +82,21 @@ public class SettingsActivity extends BaseActivity {
 
         ((TextView) findViewById(R.id.settings_app_version)).setText(BuildConfig.VERSION_NAME);
 
-        initAdView();
-    }
-
-    private void initAdView() {
-        AdInitializers.find(getApplicationContext()).invoke(adView);
+        initInterstitialAd();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         refresh();
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        if (interstitialAd.isLoaded()) {
+            interstitialAd.show();
+        }
     }
 
     private void refresh() {
@@ -100,6 +106,20 @@ public class SettingsActivity extends BaseActivity {
                 = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         wifiState.setText(wifiManager.isWifiEnabled() ? "ON" : "OFF");
         DrawableCompat.setTint(mToolbar.getOverflowIcon(), mPreferenceApplier.getFontColor());
+    }
+
+    private void initInterstitialAd() {
+        if (interstitialAd == null) {
+            interstitialAd = new InterstitialAd(getApplicationContext());
+        }
+        interstitialAd.setAdUnitId(getString(R.string.production_interstitial_unit_id));
+        interstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdOpened() {
+                super.onAdOpened();
+            }
+        });
+        AdInitializers.find(this).invoke(interstitialAd);
     }
 
     @OnClick(R.id.settings_color)

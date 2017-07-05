@@ -26,6 +26,7 @@
 
     <string name="production_app_admob_id">ca-app-pub-5751262573448755~6482404222</string>
     <string name="production_banner_unit_id">ca-app-pub-5751262573448755/7959137422</string>
+    <string name="production_interstitial_unit_id">ca-app-pub-5751262573448755/3133057826</string>
     <string name="title_advertisement_1">広</string>
     <string name="title_advertisement_2">告</string>
     <string name="settings_color_saved_title">保存した色</string>
@@ -39,5 +40,6 @@
     <string name="title_wifi_settings">Wi-Fi 設定</string>
     <string name="title_wifi_ip_settings">Wi-Fi IP 設定</string>
     <string name="title_wifi_state">Wi-Fi の状態</string>
+    <string name="message_failed_ad_loading">広告のロードに失敗しました。</string>
 
 </resources>
