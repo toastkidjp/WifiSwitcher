@@ -3,6 +3,7 @@ package jp.toastkid.wifi_switcher.settings;
 import android.content.Context;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -98,6 +99,7 @@ public class SettingsActivity extends BaseActivity {
         final WifiManager wifiManager
                 = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         wifiState.setText(wifiManager.isWifiEnabled() ? "ON" : "OFF");
+        DrawableCompat.setTint(mToolbar.getOverflowIcon(), mPreferenceApplier.getFontColor());
     }
 
     @OnClick(R.id.settings_color)
