@@ -41,5 +41,7 @@
     <string name="title_wifi_ip_settings">Wi-Fi IP 設定</string>
     <string name="title_wifi_state">Wi-Fi の状態</string>
     <string name="message_failed_ad_loading">広告のロードに失敗しました。</string>
+    <string name="thank_you_for_using">いつもお使いくださり、ありがとうございます。</string>
+    <string name="message_please_view_ad">インタースティシャル広告をご覧ください。</string>
 
 </resources>

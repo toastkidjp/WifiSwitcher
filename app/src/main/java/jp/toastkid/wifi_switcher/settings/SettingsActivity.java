@@ -8,7 +8,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.InterstitialAd;
@@ -19,7 +18,6 @@ import butterknife.OnClick;
 import jp.toastkid.wifi_switcher.BaseActivity;
 import jp.toastkid.wifi_switcher.BuildConfig;
 import jp.toastkid.wifi_switcher.R;
-import jp.toastkid.wifi_switcher.advertisement.AdInitializer;
 import jp.toastkid.wifi_switcher.advertisement.AdInitializers;
 import jp.toastkid.wifi_switcher.appwidget.Updater;
 import jp.toastkid.wifi_switcher.libs.SettingIntentFactory;
@@ -91,14 +89,6 @@ public class SettingsActivity extends BaseActivity {
         refresh();
     }
 
-    @Override
-    protected void onPostResume() {
-        super.onPostResume();
-        if (interstitialAd.isLoaded()) {
-            interstitialAd.show();
-        }
-    }
-
     private void refresh() {
         applyColorToToolbar(
                 mToolbar, mPreferenceApplier.getColor(), mPreferenceApplier.getFontColor());
@@ -115,8 +105,14 @@ public class SettingsActivity extends BaseActivity {
         interstitialAd.setAdUnitId(getString(R.string.production_interstitial_unit_id));
         interstitialAd.setAdListener(new AdListener() {
             @Override
-            public void onAdOpened() {
-                super.onAdOpened();
+            public void onAdClosed() {
+                super.onAdClosed();
+                Toaster.snackShort(
+                        mToolbar,
+                        R.string.thank_you_for_using,
+                        mPreferenceApplier.getColor(),
+                        mPreferenceApplier.getFontColor()
+                );
             }
         });
         AdInitializers.find(this).invoke(interstitialAd);
@@ -124,31 +120,37 @@ public class SettingsActivity extends BaseActivity {
 
     @OnClick(R.id.settings_color)
     public void color() {
+        attemptToShowingAd();
         startActivity(ColorSettingActivity.makeIntent(this));
     }
 
     @OnClick(R.id.settings_airplane)
     public void airplane() {
+        attemptToShowingAd();
         startActivity(SettingIntentFactory.airplane());
     }
 
     @OnClick(R.id.settings_wifi_detail)
     public void wifi() {
+        attemptToShowingAd();
         startActivity(SettingIntentFactory.wifi());
     }
 
     @OnClick(R.id.settings_wifi_ip)
     public void wifiIp() {
+        attemptToShowingAd();
         startActivity(SettingIntentFactory.wifiIp());
     }
 
     @OnClick(R.id.settings_wireless)
     public void wireless() {
+        attemptToShowingAd();
         startActivity(SettingIntentFactory.wireless());
     }
 
     @OnClick(R.id.settings_device)
     public void deviceSettings() {
+        attemptToShowingAd();
         startActivity(SettingIntentFactory.device());
     }
 
@@ -170,6 +172,19 @@ public class SettingsActivity extends BaseActivity {
                 mPreferenceApplier.getFontColor()
         );
         wifiState.setText(wifiStateText);
+    }
+
+    private void attemptToShowingAd() {
+        if (interstitialAd.isLoaded() && mPreferenceApplier.allowShowingAd()) {
+            Toaster.snackShort(
+                    mToolbar,
+                    R.string.message_please_view_ad,
+                    mPreferenceApplier.getColor(),
+                    mPreferenceApplier.getFontColor()
+            );
+            interstitialAd.show();
+            mPreferenceApplier.updateLastAd();
+        }
     }
 
     @Override
