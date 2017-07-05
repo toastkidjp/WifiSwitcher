@@ -1,9 +1,8 @@
 package jp.toastkid.wifi_switcher.settings;
 
 import android.content.Context;
-import android.content.Intent;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -43,6 +42,9 @@ public class SettingsActivity extends BaseActivity {
     @BindView(R.id.settings_licenses)
     public TextView license;
 
+    @BindView(R.id.wifi_state)
+    public TextView wifiState;
+
     @BindView(R.id.ad)
     public AdView adView;
 
@@ -66,7 +68,11 @@ public class SettingsActivity extends BaseActivity {
                     Updater.update(this);
                     refresh();
                     Toaster.snackShort(
-                            mToolbar, R.string.done_clear, mPreferenceApplier.getColor());
+                            mToolbar,
+                            R.string.done_clear,
+                            mPreferenceApplier.getColor(),
+                            mPreferenceApplier.getFontColor()
+                    );
                 })
                 .show());
         license.setOnClickListener(v -> new LicenseViewer(this).invoke());
@@ -89,6 +95,9 @@ public class SettingsActivity extends BaseActivity {
     private void refresh() {
         applyColorToToolbar(
                 mToolbar, mPreferenceApplier.getColor(), mPreferenceApplier.getFontColor());
+        final WifiManager wifiManager
+                = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        wifiState.setText(wifiManager.isWifiEnabled() ? "ON" : "OFF");
     }
 
     @OnClick(R.id.settings_color)
@@ -124,6 +133,21 @@ public class SettingsActivity extends BaseActivity {
     @OnClick(R.id.settings_background)
     public void close() {
         finish();
+    }
+
+    @OnClick(R.id.settings_wifi_switch)
+    public void wifiSwitch() {
+        final WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        final boolean newState = !wifiManager.isWifiEnabled();
+        wifiManager.setWifiEnabled(newState);
+        final String wifiStateText = newState ? "ON" : "OFF";
+        Toaster.snackShort(
+                mToolbar,
+                "Wi-Fi: " + wifiStateText,
+                mPreferenceApplier.getColor(),
+                mPreferenceApplier.getFontColor()
+        );
+        wifiState.setText(wifiStateText);
     }
 
     @Override

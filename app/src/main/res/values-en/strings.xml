@@ -37,5 +37,6 @@
     <string name="title_airplane_settings">機内モード設定</string>
     <string name="title_wifi_settings">Wi-Fi 設定</string>
     <string name="title_wifi_ip_settings">Wi-Fi IP 設定</string>
+    <string name="title_wifi_state">Wi-Fi の状態</string>
 
 </resources>

@@ -28,6 +28,9 @@ public class SnackbarActivity extends AppCompatActivity {
     private static final String EXTRA_KEY_COLOR = "color";
 
     /** Key of Extra. */
+    private static final String EXTRA_KEY_FONT_COLOR = "font_color";
+
+    /** Key of Extra. */
     private static final String EXTRA_KEY_MESSAGE = "message";
 
     /** Hold for using Snackbar. */
@@ -35,6 +38,9 @@ public class SnackbarActivity extends AppCompatActivity {
 
     /** Snackbar's color. */
     private int mColor;
+
+    /** Snackbar's font color */
+    private int mFontColor;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,6 +50,7 @@ public class SnackbarActivity extends AppCompatActivity {
         overridePendingTransition(0, 0);
 
         mColor = getIntent().getIntExtra(EXTRA_KEY_COLOR, Color.BLACK);
+        mFontColor = getIntent().getIntExtra(EXTRA_KEY_FONT_COLOR, Color.BLACK);
         setStatusBarTransparent();
         executeFinisher();
     }
@@ -82,7 +89,7 @@ public class SnackbarActivity extends AppCompatActivity {
         if (!intent.hasExtra(EXTRA_KEY_MESSAGE)) {
             return;
         }
-        Toaster.snackShort(view, intent.getStringExtra(EXTRA_KEY_MESSAGE), mColor);
+        Toaster.snackShort(view, intent.getStringExtra(EXTRA_KEY_MESSAGE), mColor, mFontColor);
     }
 
     @Override
@@ -97,7 +104,8 @@ public class SnackbarActivity extends AppCompatActivity {
     ) {
         final Intent intent = new Intent(context, SnackbarActivity.class);
         intent.putExtra(EXTRA_KEY_MESSAGE, message);
-        intent.putExtra(EXTRA_KEY_COLOR, new PreferenceApplier(context).getColor());
+        intent.putExtra(EXTRA_KEY_COLOR,      new PreferenceApplier(context).getColor());
+        intent.putExtra(EXTRA_KEY_FONT_COLOR, new PreferenceApplier(context).getFontColor());
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         return intent;

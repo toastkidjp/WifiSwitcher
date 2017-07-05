@@ -136,7 +136,12 @@ public class ColorSettingActivity extends BaseActivity {
             adapter.removeItemAsMaybe(color)
                     .subscribeOn(Schedulers.io())
                     .subscribe();
-            Toaster.snackShort(toolbar, R.string.settings_color_delete, mPreferenceApplier.getColor());
+            Toaster.snackShort(
+                    toolbar,
+                    R.string.settings_color_delete,
+                    mPreferenceApplier.getColor(),
+                    mPreferenceApplier.getFontColor()
+            );
         });
     }
 
@@ -178,13 +183,13 @@ public class ColorSettingActivity extends BaseActivity {
 
         Updater.update(this);
         refresh();
-        Toaster.snackShort(toolbar, R.string.settings_color_done_commit, bgColor);
+        Toaster.snackShort(toolbar, R.string.settings_color_done_commit, bgColor, fontColor);
     }
 
     @OnClick(R.id.settings_color_prev)
     public void reset() {
         setPreviousColor();
-        Toaster.snackShort(toolbar, R.string.settings_color_done_reset, bgPalette.getColor());
+        Toaster.snackShort(toolbar, R.string.settings_color_done_reset, bgPalette.getColor(), fontPalette.getColor());
     }
 
     @OnClick(R.id.clear_saved_color)
