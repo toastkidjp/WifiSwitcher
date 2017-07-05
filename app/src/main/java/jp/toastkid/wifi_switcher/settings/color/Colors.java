@@ -2,6 +2,7 @@ package jp.toastkid.wifi_switcher.settings.color;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
@@ -70,7 +71,8 @@ class Colors {
                     Toaster.snackShort(
                             view,
                             R.string.settings_color_delete,
-                            ((ColorDrawable) view.getBackground()).getColor()
+                            ((ColorDrawable) view.getBackground()).getColor(),
+                            Color.WHITE
                     );
                     d.dismiss();
                 });

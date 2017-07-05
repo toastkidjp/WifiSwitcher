@@ -5,7 +5,9 @@ import android.support.annotation.NonNull;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.NativeExpressAdView;
 
 import jp.toastkid.wifi_switcher.BuildConfig;
 import jp.toastkid.wifi_switcher.R;
@@ -34,6 +36,19 @@ class ProductionAdInitializer implements AdInitializer {
         if (BuildConfig.DEBUG) {
             throw new IllegalStateException();
         }
-        adView.loadAd(new AdRequest.Builder().build());
+        adView.loadAd(makeRequest());
+    }
+
+    @Override
+    public void invoke(@NonNull final InterstitialAd ad) {
+        if (BuildConfig.DEBUG) {
+            throw new IllegalStateException();
+        }
+        ad.loadAd(makeRequest());
+    }
+
+    @NonNull
+    private AdRequest makeRequest() {
+        return new AdRequest.Builder().build();
     }
 }
