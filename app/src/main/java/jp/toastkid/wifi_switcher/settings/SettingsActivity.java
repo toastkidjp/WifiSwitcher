@@ -1,6 +1,8 @@
 package jp.toastkid.wifi_switcher.settings;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -124,12 +126,6 @@ public class SettingsActivity extends BaseActivity {
         startActivity(ColorSettingActivity.makeIntent(this));
     }
 
-    @OnClick(R.id.settings_airplane)
-    public void airplane() {
-        attemptToShowingAd();
-        startActivity(SettingIntentFactory.airplane());
-    }
-
     @OnClick(R.id.settings_wifi_detail)
     public void wifi() {
         attemptToShowingAd();
@@ -152,6 +148,11 @@ public class SettingsActivity extends BaseActivity {
     public void deviceSettings() {
         attemptToShowingAd();
         startActivity(SettingIntentFactory.device());
+    }
+
+    @OnClick(R.id.settings_privacy_policy)
+    public void privacyPolicy() {
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.link_privacy_policy))));
     }
 
     @OnClick(R.id.settings_background)
