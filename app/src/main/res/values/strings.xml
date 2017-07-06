@@ -42,5 +42,7 @@
     <string name="message_failed_ad_loading">広告のロードに失敗しました。</string>
     <string name="thank_you_for_using">いつもお使いくださり、ありがとうございます。</string>
     <string name="message_please_view_ad">インタースティシャル広告をご覧ください。</string>
+    <string name="title_privacy_policy">プライバシーポリシー</string>
+    <string name="link_privacy_policy">https://tmblr.co/ZDG7Be2NVdctY</string>
 
 </resources>

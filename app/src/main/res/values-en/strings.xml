@@ -41,5 +41,7 @@
     <string name="message_failed_ad_loading">It failed to load AD...</string>
     <string name="thank_you_for_using">Thank you for using!</string>
     <string name="message_please_view_ad">Please could you bear to see interstitial AD...</string>
+    <string name="title_privacy_policy">Privacy Policy</string>
+    <string name="link_privacy_policy">https://tmblr.co/ZDG7Be2NVdctY</string>
 
 </resources>
