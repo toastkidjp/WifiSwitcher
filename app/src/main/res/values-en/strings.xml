@@ -35,7 +35,6 @@
     <string name="off">OFF</string>
     <string name="title_wireless_settings">Wireless Settings</string>
     <string name="title_device_settings">Device Settings</string>
-    <string name="title_airplane_settings">Airplane Mode Settings</string>
     <string name="title_wifi_settings">Wi-Fi Settings</string>
     <string name="title_wifi_ip_settings">Wi-Fi IP Settings</string>
     <string name="title_wifi_state">Wi-Fi State Settings</string>

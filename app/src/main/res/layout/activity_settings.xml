@@ -119,20 +119,6 @@
             <include layout="@layout/primary_dark_divider" />
 
             <TextView
-                android:id="@+id/settings_airplane"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/settings_item_height"
-                android:drawableLeft="@drawable/ic_airplane"
-                android:gravity="center_vertical"
-                android:paddingLeft="@dimen/settings_item_left_margin"
-                android:text="@string/title_airplane_settings"
-                android:textSize="16sp"
-                android:background="@drawable/ripple_soft"
-                />
-
-            <include layout="@layout/primary_dark_divider" />
-
-            <TextView
                 android:id="@+id/settings_wireless"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/settings_item_height"

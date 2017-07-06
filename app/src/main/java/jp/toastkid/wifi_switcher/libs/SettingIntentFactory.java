@@ -49,14 +49,4 @@ public class SettingIntentFactory {
         return intent;
     }
 
-    /**
-     * Make launch airplane settings intent.
-     * @return {@link Intent}
-     */
-    public static Intent airplane() {
-        final Intent intent = new Intent();
-        intent.setAction(Settings.ACTION_AIRPLANE_MODE_SETTINGS);
-        return intent;
-    }
-
 }

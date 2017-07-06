@@ -124,12 +124,6 @@ public class SettingsActivity extends BaseActivity {
         startActivity(ColorSettingActivity.makeIntent(this));
     }
 
-    @OnClick(R.id.settings_airplane)
-    public void airplane() {
-        attemptToShowingAd();
-        startActivity(SettingIntentFactory.airplane());
-    }
-
     @OnClick(R.id.settings_wifi_detail)
     public void wifi() {
         attemptToShowingAd();
