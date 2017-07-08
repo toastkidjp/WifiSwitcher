@@ -2,29 +2,23 @@ package jp.toastkid.wifi_switcher.settings.color;
 
 import android.content.Context;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.github.gfx.android.orma.Relation;
 import com.github.gfx.android.orma.widget.OrmaRecyclerViewAdapter;
-import com.larswerkman.holocolorpicker.ColorPicker;
-import com.larswerkman.holocolorpicker.OpacityBar;
-import com.larswerkman.holocolorpicker.SVBar;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import io.reactivex.schedulers.Schedulers;
 import jp.toastkid.wifi_switcher.BaseActivity;
 import jp.toastkid.wifi_switcher.R;
 import jp.toastkid.wifi_switcher.appwidget.Updater;
+import jp.toastkid.wifi_switcher.databinding.ActivitySettingsColorBinding;
 import jp.toastkid.wifi_switcher.libs.Toaster;
 import jp.toastkid.wifi_switcher.libs.preference.PreferenceApplier;
 
@@ -35,36 +29,6 @@ import jp.toastkid.wifi_switcher.libs.preference.PreferenceApplier;
  */
 public class ColorSettingActivity extends BaseActivity {
 
-    @BindView(R.id.settings_color_toolbar)
-    public Toolbar toolbar;
-
-    @BindView(R.id.background_palette)
-    public ColorPicker bgPalette;
-
-    @BindView(R.id.background_svbar)
-    public SVBar bgSvBar;
-
-    @BindView(R.id.background_opacitybar)
-    public OpacityBar bgOpacityBar;
-
-    @BindView(R.id.font_palette)
-    public ColorPicker fontPalette;
-
-    @BindView(R.id.font_svbar)
-    public SVBar fontSvBar;
-
-    @BindView(R.id.font_opacitybar)
-    public OpacityBar fontOpacityBar;
-
-    @BindView(R.id.settings_color_ok)
-    public Button ok;
-
-    @BindView(R.id.settings_color_prev)
-    public Button prev;
-
-    @BindView(R.id.saved_colors)
-    public RecyclerView savedColorsView;
-
     private int initialBgColor;
 
     private int initialFontColor;
@@ -73,54 +37,61 @@ public class ColorSettingActivity extends BaseActivity {
 
     private OrmaRecyclerViewAdapter<SavedColor, SavedColorHolder> adapter;
 
+    private ActivitySettingsColorBinding binding;
+
     @Override
     public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings_color);
-        ButterKnife.bind(this);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_settings_color);
+        binding.setActivity(this);
 
         mPreferenceApplier = new PreferenceApplier(this);
 
         initialFontColor = mPreferenceApplier.getFontColor();
-        prev.setTextColor(initialFontColor);
+        binding.settingsColorPrev.setTextColor(initialFontColor);
 
         initialBgColor = mPreferenceApplier.getColor();
-        prev.setBackgroundColor(initialBgColor);
+        binding.settingsColorPrev.setBackgroundColor(initialBgColor);
 
         initPalette();
-        initToolbar(toolbar);
+        initToolbar(binding.toolbar);
         initSavedColors();
+
+        binding.savedColors.clearSavedColor.setOnClickListener(v ->
+                Colors.showClearColorsDialog(this, binding.toolbar, (SavedColor_Relation) adapter.getRelation())
+        );
     }
 
     private void initPalette() {
-        bgPalette.addSVBar(bgSvBar);
-        bgPalette.addOpacityBar(bgOpacityBar);
-        bgPalette.setOnColorChangedListener(c -> {
-            toolbar.setBackgroundColor(c);
-            ok.setBackgroundColor(c);
+        binding.pickers.backgroundPalette.addSVBar(binding.pickers.backgroundSvbar);
+        binding.pickers.backgroundPalette.addOpacityBar(binding.pickers.backgroundOpacitybar);
+        binding.pickers.backgroundPalette.setOnColorChangedListener(c -> {
+            binding.toolbar.setBackgroundColor(c);
+            binding.settingsColorOk.setBackgroundColor(c);
         });
 
-        fontPalette.addSVBar(fontSvBar);
-        fontPalette.addOpacityBar(fontOpacityBar);
-        fontPalette.setOnColorChangedListener(c -> {
-            toolbar.setTitleTextColor(c);
-            ok.setTextColor(c);
+        binding.pickers.fontPalette.addSVBar(binding.pickers.fontSvbar);
+        binding.pickers.fontPalette.addOpacityBar(binding.pickers.fontOpacitybar);
+        binding.pickers.fontPalette.setOnColorChangedListener(c -> {
+            binding.toolbar.setTitleTextColor(c);
+            binding.settingsColorOk.setTextColor(c);
         });
 
         setPreviousColor();
     }
 
     private void setPreviousColor() {
-        bgPalette.setColor(initialBgColor);
-        fontPalette.setColor(initialFontColor);
-        applyColorToToolbar(toolbar, initialBgColor, initialFontColor);
+        binding.pickers.backgroundPalette.setColor(initialBgColor);
+        binding.pickers.fontPalette.setColor(initialFontColor);
+        applyColorToToolbar(binding.toolbar, initialBgColor, initialFontColor);
     }
 
     private void initSavedColors() {
 
         adapter = new SavedColorAdapter(this, DbInitter.get(this).relationOfSavedColor());
-        savedColorsView.setAdapter(adapter);
-        savedColorsView.setLayoutManager(
+        binding.savedColors.savedColors.setAdapter(adapter);
+        binding.savedColors.savedColors.setLayoutManager(
                 new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
     }
 
@@ -137,7 +108,7 @@ public class ColorSettingActivity extends BaseActivity {
                     .subscribeOn(Schedulers.io())
                     .subscribe();
             Toaster.snackShort(
-                    toolbar,
+                    binding.toolbar,
                     R.string.settings_color_delete,
                     mPreferenceApplier.getColor(),
                     mPreferenceApplier.getFontColor()
@@ -154,14 +125,13 @@ public class ColorSettingActivity extends BaseActivity {
     private void refresh() {
         final int bgColor   = mPreferenceApplier.getColor();
         final int fontColor = mPreferenceApplier.getFontColor();
-        applyColorToToolbar(toolbar, bgColor, fontColor);
-        Colors.setBgAndText(ok, bgColor, fontColor);
+        applyColorToToolbar(binding.toolbar, bgColor, fontColor);
+        Colors.setBgAndText(binding.settingsColorOk, bgColor, fontColor);
     }
 
-    @OnClick(R.id.settings_color_ok)
-    public void ok() {
-        final int bgColor   = bgPalette.getColor();
-        final int fontColor = fontPalette.getColor();
+    public void ok(final View v) {
+        final int bgColor   = binding.pickers.backgroundPalette.getColor();
+        final int fontColor = binding.pickers.fontPalette.getColor();
 
         commitNewColor(bgColor, fontColor);
 
@@ -183,18 +153,17 @@ public class ColorSettingActivity extends BaseActivity {
 
         Updater.update(this);
         refresh();
-        Toaster.snackShort(toolbar, R.string.settings_color_done_commit, bgColor, fontColor);
+        Toaster.snackShort(binding.toolbar, R.string.settings_color_done_commit, bgColor, fontColor);
     }
 
-    @OnClick(R.id.settings_color_prev)
-    public void reset() {
+    public void reset(final View v) {
         setPreviousColor();
-        Toaster.snackShort(toolbar, R.string.settings_color_done_reset, bgPalette.getColor(), fontPalette.getColor());
-    }
-
-    @OnClick(R.id.clear_saved_color)
-    public void clearSavedColor() {
-        Colors.showClearColorsDialog(this, toolbar, (SavedColor_Relation) adapter.getRelation());
+        Toaster.snackShort(
+                binding.toolbar,
+                R.string.settings_color_done_reset,
+                binding.pickers.backgroundPalette.getColor(),
+                binding.pickers.fontPalette.getColor()
+        );
     }
 
     @Override
@@ -215,7 +184,7 @@ public class ColorSettingActivity extends BaseActivity {
 
     private class SavedColorAdapter extends OrmaRecyclerViewAdapter<SavedColor, SavedColorHolder> {
 
-        public SavedColorAdapter(@NonNull Context context, @NonNull Relation<SavedColor, ?> relation) {
+        SavedColorAdapter(@NonNull Context context, @NonNull Relation<SavedColor, ?> relation) {
             super(context, relation);
         }
 
