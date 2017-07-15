@@ -33,6 +33,7 @@
         <activity android:name=".SnackbarActivity"
             android:theme="@style/SnackbarTheme"
             android:configChanges="screenSize"
+            android:excludeFromRecents="true"
             />
 
         <service android:name=".wifi.WifiSwitcher"/>
