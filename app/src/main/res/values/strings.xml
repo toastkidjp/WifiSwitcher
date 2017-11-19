@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Simple Wi-Fi Switch App Widget</string>
+    <string name="app_name">Simple Wi-Fi Switch</string>
 
     <string name="title_settings">Settings</string>
     <string name="title_settings_color">Color settings</string>
