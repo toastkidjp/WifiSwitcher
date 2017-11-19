@@ -1,7 +1,6 @@
 package jp.toastkid.wifi_switcher.appwidget;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.net.wifi.WifiManager;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
@@ -45,7 +44,7 @@ class RemoteViewsFactory {
                 remoteViews,
                 wifiEnabled
                         ? preferenceApplier.getColor()
-                        : ContextCompat.getColor(context, R.color.disbaled)
+                        : ContextCompat.getColor(context, R.color.disabled)
         );
 
         setFontColor(remoteViews, preferenceApplier.getFontColor());
