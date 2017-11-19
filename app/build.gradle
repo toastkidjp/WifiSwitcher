@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.github.triplet.play'
+apply from: 'signing/config.gradle', to: android
 
 android {
     compileSdkVersion 26
@@ -7,6 +9,18 @@ android {
     byte verMajor  = 1;
     byte verMiddle = 0;
     byte verMinor  = 5;
+
+    playAccountConfigs {
+        defaultAccountConfig {
+            serviceAccountEmail = 'tk-bot@api-6327630184664180575-715630.iam.gserviceaccount.com'
+            jsonFile = file('signing/Google Play Android Developer-cbf2176b721a.json')
+        }
+    }
+
+    play {
+        track = 'beta'
+        untrackOld = true
+    }
 
     defaultConfig {
         applicationId "jp.toastkid.wifi_switcher"
@@ -18,12 +32,15 @@ android {
         versionCode ((verMajor * 10000) + (verMiddle * 100) + verMinor)
         versionName verMajor + "." + verMiddle + "." + verMinor
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        playAccountConfig = playAccountConfigs.defaultAccountConfig
     }
     buildTypes {
         release {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {
