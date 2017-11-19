@@ -1,10 +1,10 @@
 package jp.toastkid.wifi_switcher.appwidget;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.net.wifi.WifiManager;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.widget.RemoteViews;
 
 import jp.toastkid.wifi_switcher.R;
@@ -18,7 +18,9 @@ import jp.toastkid.wifi_switcher.wifi.WifiSwitcher;
  */
 class RemoteViewsFactory {
 
-    /** Method name. */
+    /**
+     * Method name.
+     */
     private static final String METHOD_NAME_SET_COLOR_FILTER = "setColorFilter";
 
     /**
@@ -35,9 +37,15 @@ class RemoteViewsFactory {
 
         final PreferenceApplier preferenceApplier = new PreferenceApplier(context);
 
-        final WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        final WifiManager wifiManager
+                = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         final boolean wifiEnabled = wifiManager.isWifiEnabled();
-        setColor(remoteViews, wifiEnabled ? preferenceApplier.getColor() : Color.GRAY);
+        setColor(
+                remoteViews,
+                wifiEnabled
+                        ? preferenceApplier.getColor()
+                        : ContextCompat.getColor(context, R.color.disabled)
+        );
 
         setFontColor(remoteViews, preferenceApplier.getFontColor());
         remoteViews.setTextViewText(R.id.widget_text, wifiEnabled ? "ON" : "OFF");
@@ -54,8 +62,7 @@ class RemoteViewsFactory {
             final RemoteViews remoteViews,
             @ColorInt final int backgroundColor
     ) {
-        remoteViews.setInt(
-                R.id.widget_wifi, METHOD_NAME_SET_COLOR_FILTER, backgroundColor);
+        remoteViews.setInt(R.id.widget_wifi, METHOD_NAME_SET_COLOR_FILTER, backgroundColor);
     }
 
     /**
