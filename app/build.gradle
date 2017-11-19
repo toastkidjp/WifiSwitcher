@@ -1,9 +1,8 @@
 apply plugin: 'com.android.application'
-apply plugin: 'me.tatarka.retrolambda'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    compileSdkVersion 26
+    buildToolsVersion "26.0.2"
 
     byte verMajor  = 1;
     byte verMiddle = 0;
@@ -12,7 +11,7 @@ android {
     defaultConfig {
         applicationId "jp.toastkid.wifi_switcher"
         minSdkVersion 15
-        targetSdkVersion 25
+        targetSdkVersion 26
         if (verMiddle >= 100 || verMinor >= 100) {
             throw new IllegalStateException("Middle and Minor version value is allowed under 100.")
         }
@@ -37,32 +36,32 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
-    def supportLibVersion = '25.3.1'
-    compile 'com.android.support:appcompat-v7:' + supportLibVersion
-    compile 'com.android.support:design:'       + supportLibVersion
+    def supportLibVersion = '26.0.2'
+    implementation 'com.android.support:appcompat-v7:' + supportLibVersion
+    implementation 'com.android.support:design:'       + supportLibVersion
 
-    def firebaseVersion = '10.2.1'
-    compile 'com.google.firebase:firebase-core:'  + firebaseVersion
-    compile 'com.google.firebase:firebase-ads:'   + firebaseVersion
-    compile 'com.google.firebase:firebase-crash:' + firebaseVersion
+    def firebaseVersion = '11.4.2'
+    implementation 'com.google.firebase:firebase-core:'  + firebaseVersion
+    implementation 'com.google.firebase:firebase-ads:'   + firebaseVersion
+    implementation 'com.google.firebase:firebase-crash:' + firebaseVersion
 
-    compile 'com.larswerkman:HoloColorPicker:1.5'
-    compile 'com.squareup.okio:okio:1.13.0'
-    compile 'io.reactivex.rxjava2:rxjava:2.1.0'
-    compile 'com.github.gfx.android.orma:orma:4.2.5'
+    implementation 'com.larswerkman:HoloColorPicker:1.5'
+    implementation 'com.squareup.okio:okio:1.13.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.5'
+    implementation 'com.github.gfx.android.orma:orma:4.2.5'
 
     annotationProcessor 'com.github.gfx.android.orma:orma-processor:4.2.5'
 
-    def leakcanaryVersion = '1.5.1'
-    debugCompile   'com.squareup.leakcanary:leakcanary-android:'       + leakcanaryVersion
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:' + leakcanaryVersion
+    def leakcanaryVersion = '1.5.4'
+    debugImplementation   'com.squareup.leakcanary:leakcanary-android:'       + leakcanaryVersion
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:' + leakcanaryVersion
 
-    testCompile 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.12'
 }
 
 apply plugin: 'com.google.gms.google-services'
