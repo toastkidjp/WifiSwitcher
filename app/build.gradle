@@ -3,8 +3,8 @@ apply plugin: 'com.github.triplet.play'
 apply from: 'signing/config.gradle', to: android
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.2"
+    compileSdkVersion 28
+    buildToolsVersion "28.0.3"
 
     byte verMajor  = 1;
     byte verMiddle = 0;
@@ -25,7 +25,7 @@ android {
     defaultConfig {
         applicationId "jp.toastkid.wifi_switcher"
         minSdkVersion 15
-        targetSdkVersion 26
+        targetSdkVersion 28
         if (verMiddle >= 100 || verMinor >= 100) {
             throw new IllegalStateException("Middle and Minor version value is allowed under 100.")
         }
@@ -58,7 +58,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
-    def supportLibVersion = '26.0.2'
+    def supportLibVersion = '28.0.0'
     implementation 'com.android.support:appcompat-v7:' + supportLibVersion
     implementation 'com.android.support:design:'       + supportLibVersion
 
