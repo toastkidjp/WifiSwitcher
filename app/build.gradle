@@ -8,7 +8,7 @@ android {
 
     byte verMajor  = 1;
     byte verMiddle = 0;
-    byte verMinor  = 6;
+    byte verMinor  = 7;
 
     playAccountConfigs {
         defaultAccountConfig {
